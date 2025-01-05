@@ -28,7 +28,7 @@ export function AppRoutes() {
         name="products"
         component={Home}
         options={{
-          tabBarIcon: ({ color }) => <Ionicons name="md-home-outline" color={color} size={sizes[6]} />
+          tabBarIcon: ({ color }) => <Ionicons name="home-outline" color={color} size={sizes[6]} />
         }}
       />
 
