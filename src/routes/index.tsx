@@ -1,14 +1,36 @@
 import { useTheme } from "native-base";
-import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import {
+  DefaultTheme,
+  LinkingOptions,
+  NavigationContainer,
+} from "@react-navigation/native";
 
 import { AppRoutes } from "./app.routes";
-import { useEffect, useState } from "react";
+import { ComponentProps, useEffect, useState } from "react";
 import {
   NotificationWillDisplayEvent,
   OneSignal,
   OSNotification,
 } from "react-native-onesignal";
 import { Notification } from "../components/Notification";
+
+const linking: ComponentProps<typeof NavigationContainer>["linking"] = {
+  prefixes: [
+    "com.brunoobd.igniteshoes://",
+    "exp+igniteshoes://",
+    "igniteshoes://",
+  ],
+  config: {
+    screens: {
+      details: {
+        path: "details/:productId",
+        parse: {
+          productId: (productId: string) => productId,
+        },
+      },
+    },
+  },
+};
 
 export function Routes() {
   const [notification, setNotification] = useState<OSNotification>();
@@ -37,7 +59,7 @@ export function Routes() {
   }, []);
 
   return (
-    <NavigationContainer theme={theme}>
+    <NavigationContainer theme={theme} linking={linking}>
       <AppRoutes />
 
       {!!notification && (
